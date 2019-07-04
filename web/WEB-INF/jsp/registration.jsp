@@ -1,10 +1,13 @@
+<%@ page pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="w3.css">
     <meta charset="UTF-8">
-    <title>My super project!</title>
+    <title>OnlinePayment</title>
 </head>
 <body>
 <!-- header -->

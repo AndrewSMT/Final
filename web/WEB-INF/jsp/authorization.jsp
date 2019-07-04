@@ -1,19 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+<html>
 <head>
     <link rel="stylesheet" href="w3.css">
     <meta charset="UTF-8">
-    <title>My super project!</title>
+    <title>OnlinePayment</title>
 </head>
 <body>
 <!-- header -->
 <div>
-    <h1>Add new user</h1>
+    <h1>Авторизция</h1>
 </div>
 <div>
     <form method="post" class="form-1">
         <p class="field">
-            <input type="text" name="name" placeholder="login">
+            <input type="text" name="login" placeholder="login">
             <i class="icon-user icon-large"></i>
         </p>
         <p class="field">
@@ -25,10 +27,5 @@
         </p>
     </form>
 </div>
-<%
-    if (request.getAttribute("userName") != null) {
-        out.println(" User '" + request.getAttribute("userName") + "' added! ");
-    }
-%>
 </body>
 </html>

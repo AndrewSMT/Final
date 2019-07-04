@@ -1,11 +1,13 @@
 package app.servlets;
 
-import app.connect.Connector;
+
+
+import app.connect.Database;
 import app.entities.User;
-import app.model.Model;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,19 +16,21 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-public class AddServlet extends HttpServlet {
+
+@WebServlet("/authorization/*")
+public class AuthorizationServlet extends HttpServlet {
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/add.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/jsp/authorization.jsp");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Connection con = Connector.initializeDatabase();
+            Connection con = Database.initializeDatabase();
             System.out.println(con);
             PreparedStatement st = con
                     .prepareStatement("INSERT INTO demoprj.demo  ( id,login,password) VALUES (?,?,?)");
@@ -45,8 +49,7 @@ public class AddServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("pass");
         User user = new User(name, password);
-        Model model = Model.getInstance();
-        model.add(user);
+
 
         request.setAttribute("userName", name);
         doGet(request, response);
