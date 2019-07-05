@@ -1,0 +1,15 @@
+#footer {
+      position: fixed;
+      width: 100%;
+  }
+#autForm{
+    border: 2px solid #10b5b0;
+    border-radius: 5px;
+    text-align: center;
+}
+.On{
+    color: #8725b7;
+}
+#h11{
+    font: bold 30px "Arial";
+}

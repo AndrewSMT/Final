@@ -1,0 +1,14 @@
+
+<body>
+<!-- header -->
+<div  class="w3-container w3-teal">
+    <h1 id="h11"><span class="On">On</span>line<span class="On">Pa</span>yment</h1>
+</div>
+</body>
+
+
+<%--===========================================================================
+If you define http-equiv attribute, set the content type and the charset the same
+as you set them in a page directive.
+===========================================================================--%>
+
