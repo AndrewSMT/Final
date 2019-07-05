@@ -8,7 +8,8 @@
 <body>
 <!-- header -->
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
-    <form id="autForm" class="w3-container w3-display-middle">
+    <form id="autForm" class="w3-container w3-display-middle" action="controller" method="post">
+        <input type="hidden" name="command" value="login"/>
        <p><label c>Вход в личный кабинет</label></p>
         <input class="w3-input w3-border" type="text" name="login" placeholder="Логин">
         <p></p>
