@@ -6,10 +6,15 @@
 <body>
 <!-- header -->
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
-<div class="w3-display-middle">    <!-- buttons holder -->
-
-    <button  class="w3-btn w3-green w3-border w3-border-gray w3-round-large" onclick="location.href='/registration'">Регистрация</button>
-    <button  class="w3-btn w3-green w3-border w3-border-gray w3-round-large" onclick="location.href='/authorization'">Авторизация</button>
+<div id="autFor" class="w3-display-middle">    <!-- buttons holder -->
+    <form  id = "form-2"  action="controller" method="get">
+        <input type="hidden" name="command" value="LogPage"/>
+        <button  class="w3-btn w3-green w3-border w3-border-gray w3-round-large">Authorization</button>
+    </form>
+    <form   id = "form-1"  action="controller" method="get">
+        <input type="hidden" name="command" value="RegPage"/>
+        <button  id="indexBut" class="w3-btn w3-green w3-border w3-border-gray w3-round-large"> Registration </button>
+    </form>
 </div>
 <%@ include file="/WEB-INF/jspf/footer.jspf"%>
 </body>

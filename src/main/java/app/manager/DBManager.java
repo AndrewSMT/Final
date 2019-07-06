@@ -1,14 +1,14 @@
 package app.manager;
 
 import app.Fields;
-import app.connect.Database;
+
 import app.entities.User;
 import app.exception.DBException;
 import app.exception.Messages;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,7 +44,9 @@ public final class DBManager {
             throw new DBException(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
         }
     }
+
     private DataSource ds;
+
     public Connection getConnection() throws DBException {
         Connection con = null;
         try {
@@ -64,6 +66,9 @@ public final class DBManager {
 
     private static final String SQL_FIND_USER_BY_LOGIN = "SELECT * FROM user WHERE login=?";
 
+
+    private static final String SQL_INSERT_USER = "INSERT INTO user  (login,password,phone,id_status,id_type,first_name,last_name)VALUES (?,?,?,?,?,?,?)";
+
     private static final String SQL_FIND_ALL_ORDERS = "SELECT * FROM orders";
 
     private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM users WHERE id=?";
@@ -71,7 +76,7 @@ public final class DBManager {
     private static final String SQL_FIND_ALL_MENU_ITEMS = "SELECT * FROM menu";
 
 
-    public User findUserByLogin(String login) throws DBException{
+    public User findUserByLogin(String login) throws DBException {
         User user = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -95,8 +100,45 @@ public final class DBManager {
         }
         return user;
     }
+
+    public User insertNewUser(User user) throws DBException {
+        boolean res = false;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            con = getConnection();
+            pstmt = con.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+            con.setAutoCommit(false);
+
+            pstmt.setString(1, user.getLogin());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setString(3, user.getPhone());
+            pstmt.setInt(4, 2);
+            pstmt.setInt(5, 2);
+            pstmt.setString(6, user.getFirstName());
+            pstmt.setString(7, user.getFirstName());
+            if (pstmt.executeUpdate() > 0) {
+                rs = pstmt.getGeneratedKeys();
+                // not "id"
+                if (rs.next()) {
+                    rs.getLong(1);
+                }
+                res = true;
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            rollback(con);
+            throw new DBException(Messages.ERR_CREATE_USER, ex);
+        } finally {
+            close(con, pstmt, rs);
+        }
+        return user;
+    }
+
     private User extractUser(ResultSet rs) throws SQLException {
         User user = new User();
+
         user.setId(rs.getLong(Fields.ENTITY_ID));
         user.setLogin(rs.getString(Fields.USER_LOGIN));
         user.setPassword(rs.getString(Fields.USER_PASSWORD));
@@ -107,6 +149,7 @@ public final class DBManager {
         user.setId_status(rs.getInt(Fields.STATUS_USER_ID));
         return user;
     }
+
     private void close(Connection con) {
         if (con != null) {
             try {
@@ -117,9 +160,9 @@ public final class DBManager {
         }
     }
 
-    /**
-     * Closes a statement object.
-     */
+
+    //Closes a statement object.
+
     private void close(Statement stmt) {
         if (stmt != null) {
             try {
@@ -130,9 +173,9 @@ public final class DBManager {
         }
     }
 
-    /**
-     * Closes a result set object.
-     */
+
+    //Closes a result set object.
+
     private void close(ResultSet rs) {
         if (rs != null) {
             try {
@@ -143,21 +186,18 @@ public final class DBManager {
         }
     }
 
-    /**
-     * Closes resources.
-     */
+
+    // Closes resources.
+
     private void close(Connection con, Statement stmt, ResultSet rs) {
         close(rs);
         close(stmt);
         close(con);
     }
 
-    /**
-     * Rollbacks a connection.
-     *
-     * @param con
-     *            Connection to be rollbacked.
-     */
+
+    //Rollbacks a connection.
+
     private void rollback(Connection con) {
         if (con != null) {
             try {

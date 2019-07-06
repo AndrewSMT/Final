@@ -15,12 +15,9 @@ import org.apache.log4j.Logger;
 import app.web.command.Command;
 
 
-/**
- * Main servlet controller.
- *
- * @author D.Kolesnikov
- *
- */
+
+ // Controll servlet
+
 @WebServlet("/controller/*")
 public class Controller extends HttpServlet {
 
@@ -38,9 +35,9 @@ public class Controller extends HttpServlet {
         process(request, response);
     }
 
-    /**
-     * Main method of this controller.
-     */
+
+     // Main method controller.
+
     private void process(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
 

@@ -1,7 +1,7 @@
 package app.entities;
 
 public enum TypeUser {
-    ADMIN, CLIENT;
+    NOROLE, ADMIN, CLIENT;
 
     public static TypeUser getTypeUser(User user) {
         int id_type = user.getId_type();
