@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ClientMenuCommand extends Command {
 
-  //  private static final long serialVersionUID = 7732286214029478505L;
+    private static final long serialVersionUID = 7732286214029478505L;
     @Override
     public String execute(HttpServletRequest request,
                           HttpServletResponse response)  {

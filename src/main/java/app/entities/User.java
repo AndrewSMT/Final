@@ -1,10 +1,10 @@
 package app.entities;
 
 
-
-public class User extends Entity {
+public class User {
 
     private static final long serialVersionUID = -6889036256149495388L;
+    private Long id_user;
 
     private String login;
 
@@ -23,7 +23,8 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "User{" +
-                "login='" + login + '\'' +
+                "id_user=" + id_user +
+                ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -51,6 +52,14 @@ public class User extends Entity {
 
     public int getId_type() {
         return id_type;
+    }
+
+    public Long getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(Long id) {
+        this.id_user = id;
     }
 
     public void setId_type(int id_type) {
@@ -88,9 +97,6 @@ public class User extends Entity {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-
-
 
 
 }

@@ -5,16 +5,12 @@
 <%@ include file="/WEB-INF/jspf/pageConfig.jspf" %>
 <body>
 <!-- header -->
-<%@ include file="/WEB-INF/jspf/header.jspf"%>
+<%@ include file="/WEB-INF/jspf/header1.jspf"%>
 <div id="autFor" class="w3-display-middle">    <!-- buttons holder -->
-    <form  id = "form-2"  action="controller" method="get">
-        <input type="hidden" name="command" value="LogPage"/>
-        <button  class="w3-btn w3-green w3-border w3-border-gray w3-round-large">Authorization</button>
-    </form>
-    <form   id = "form-1"  action="controller" method="get">
-        <input type="hidden" name="command" value="RegPage"/>
-        <button  id="indexBut" class="w3-btn w3-green w3-border w3-border-gray w3-round-large"> Registration </button>
-    </form>
+    <button  class="w3-btn  w3-border w3-cyan w3-border-gray w3-round-large w3-medium"
+             onclick="location.href='/registration'"><p class="index-button">Registration</p></button>
+    <button class="w3-btn w3-border  w3-cyan w3-border-gray w3-round-large w3-medium"
+            onclick="location.href='/authorization'"><p class="index-button">Authorization</p></button>
 </div>
 <%@ include file="/WEB-INF/jspf/footer.jspf"%>
 </body>

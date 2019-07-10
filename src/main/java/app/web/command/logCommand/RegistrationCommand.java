@@ -1,10 +1,10 @@
-package app.web.command;
+package app.web.command.logCommand;
 
 import app.Path;
-import app.entities.TypeUser;
 import app.entities.User;
 import app.exception.AppException;
 import app.manager.DBManager;
+import app.web.command.Command;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

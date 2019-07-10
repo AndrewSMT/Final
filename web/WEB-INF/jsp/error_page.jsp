@@ -13,7 +13,7 @@
 <table id="main-container">
 
     <%-- HEADER --%>
-    <%@ include file="/WEB-INF/jspf/header.jspf"%>
+    <%@ include file="/WEB-INF/jspf/header1.jspf"%>
     <%-- HEADER --%>
 
     <tr >
@@ -41,7 +41,7 @@
                 <% exception.printStackTrace(new PrintWriter(out)); %>
             </c:if>
 
-            <%-- if we get this page using forward --%>
+            <%-- if we get this links using forward --%>
             <c:if test="${not empty requestScope.errorMessage}">
                 <h3>${requestScope.errorMessage}</h3>
             </c:if>

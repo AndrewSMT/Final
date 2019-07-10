@@ -1,15 +1,86 @@
 #footer {
-      position: fixed;
-      width: 100%;
-  }
-#autForm{
+    position: fixed;
+    width: 100%;
+}
+
+#autForm {
     border: 2px solid #10b5b0;
     border-radius: 5px;
     text-align: center;
 }
-.On{
-    color: #8725b7;
+
+.On {
+    color: #30b7b2;
 }
-#h11{
+
+#h11 {
     font: bold 30px "Arial";
+}
+
+.menu-button {
+    border: 0;
+    width: 150px;
+    padding: 12px 15px 10px;
+    height: 89px;
+}
+
+#client-menu {
+    margin-left: 25%;
+}
+
+.block-1 {
+    display: flex;
+    width: 1500px;
+    margin: 10px;
+}
+
+.index-button {
+    font: bold 20px "Arial";;
+    color: #ffffff;
+
+}
+
+.select {
+    width: 225px;
+    border: 1px solid silver;
+    height: 35px;
+    color: #727171;
+}
+
+.header2 {
+    margin-top: 15px;
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    text-align: right;
+}
+
+#headF {
+    margin-right: 10px;
+}
+
+#img1 {
+    margin-top: 20px;
+    margin-left: 40px;
+    width: 100px;
+    height: 100px;
+}
+
+.login {
+    margin-left: 60px;
+}
+
+.clientop {
+    width: 700%;
+    margin-left: 20px;
+}
+
+#flex {
+    margin-top: 10px;
+    display: flex;
+}
+.st{
+    margin-left: 15px;
 }

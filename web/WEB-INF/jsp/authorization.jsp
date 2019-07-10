@@ -7,7 +7,7 @@
 </head>
 <body>
 <!-- header -->
-<%@ include file="/WEB-INF/jspf/header.jspf"%>
+<%@ include file="/WEB-INF/jspf/header1.jspf"%>
     <form id="autForm" class="w3-container w3-display-middle" action="controller" method="post">
         <input type="hidden" name="command" value="login"/>
        <p><label c>Login to your account</label></p>
