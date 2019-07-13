@@ -2,7 +2,7 @@ package app;
 
 public final class Fields {
 
-    // entities
+    // user
     public static final String USER_ID = "id_user";
     public static final String USER_LOGIN = "login";
     public static final String USER_PASSWORD = "password";
@@ -15,25 +15,24 @@ public final class Fields {
     public static final String STATUS_USER = "title";
 
 
-    public static final String ORDER_BILL = "bill";
-    public static final String ORDER_USER_ID = "user_id";
-    public static final String ORDER_STATUS_ID= "status_id";
-
-    public static final String CATEGORY_NAME = "name";
-
-    public static final String MENU_ITEM_PRICE = "price";
-    public static final String MENU_ITEM_NAME = "name";
-    public static final String MENU_ITEM_CATEGORY_ID = "category_id";
-
-    // beans
-    public static final String USER_BEAN_CARD_LOGIN  = "login";
-    public static final String USER_BEAN_CARD_ID_ACCOUNT  = "id_account";
+    // card
+    public static final String USER_BEAN_CARD_LOGIN = "login";
+    public static final String USER_BEAN_CARD_ID_ACCOUNT = "id_account";
     public static final String USER_BEAN_CARD_NUMBER = "number";
-    public static final String USER_BEAN_CARD_BALANCE  = "balance";
-    public static final String USER_BEAN_CARD_DATE  = "date";
+    public static final String USER_BEAN_CARD_BALANCE = "balance";
+    public static final String USER_BEAN_CARD_DATE = "date";
     public static final String USER_BEAN_CARD_NAME = "name";
-    public static final String USER_BEAN_CARD_STATUS  = "title";
+    public static final String USER_BEAN_CARD_STATUS = "title";
     public static final String USER_BEAN_CARD_REQUEST = "request";
 
+    // payment
+    public static final String USER_BEAN_CARD_NUMBER_FROM = "number";
+    public static final String USER_BEAN_CARD_PERSONAL_ACCOUNT = "personal_account";
+    public static final String USER_BEAN_CARD_ID_PAYMENT = "id_payment";
+    public static final String USER_BEAN_PAYMENT_VALUE= "value";
+    public static final String USER_BEAN_PAYMENT_DATE= "date";
 
+    //service
+    public static final String SERVICE_BEAN_TITLE = "title";
+    public static final String SERVICE_BEAN_ID_ACCOUNT = "id_account";
 }

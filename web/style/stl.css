@@ -4,11 +4,17 @@
 }
 
 #autForm {
+     border: 2px solid #10b5b0;
+     border-radius: 5px;
+     text-align: center;
+ }
+#cardForm {
     border: 2px solid #10b5b0;
     border-radius: 5px;
+}
+.text{
     text-align: center;
 }
-
 .On {
     color: #30b7b2;
 }

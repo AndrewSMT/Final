@@ -17,7 +17,7 @@
             </form>
 
             <form class="clientop" action="controller" method="post">
-                <p><button class="w3-btn w3-blue " style="width:13%" type="submit" name="command" value="ViewCard">My payment</button></p>
+                <p><button class="w3-btn w3-blue " style="width:13%" type="submit" name="command" value="ViewPayment">My payment</button></p>
             </form>
 
             <form class="clientop" action="controller" method="post">
@@ -27,18 +27,18 @@
         <div id="client-menu">
             <div class="block-1">
                 <form  action="controller" method="get">
-                    <input type="hidden" name="command" value="ViewPayment"/>
-                    <button class="w3-btn w3-border  w3-blue w3-border-gray w3-round-large w3-medium" style="width:28%"
+                    <input type="hidden" name="command" value="Payment"/>
+                    <button class="w3-btn w3-border  w3-blue w3-border-gray w3-round-large w3-medium" style="width:142%"
                             name="payment" value="transfer"><p class="index-button">Transfer between cards</p></button>
                 </form>
             </div>
             <div class="block-1">
                 <form  action="controller" method="get">
-                    <input type="hidden" name="command" value="ViewPayment"/>
-                    <button class="w3-btn w3-border  w3-blue w3-border-gray w3-round-large w3-medium" style="width:14%"
+                    <input type="hidden" name="command" value="Payment"/>
+                    <button class="w3-btn w3-border  w3-blue w3-border-gray w3-round-large w3-medium" style="width:50%"
                             name="payment" value="internet"><p class="index-button">Internet payment</p></button>
 
-                    <button class="w3-btn w3-border  w3-blue w3-border-gray w3-round-large w3-medium" style="width:14%"
+                    <button class="w3-btn w3-border  w3-blue w3-border-gray w3-round-large w3-medium" style="width:48%"
                             name="payment" value="public"><p class="index-button">Public service</p></button>
                 </form>
             </div>
