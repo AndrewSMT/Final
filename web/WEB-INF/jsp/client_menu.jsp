@@ -6,9 +6,22 @@
     <%@ include file="/WEB-INF/jspf/pageConfig.jspf" %>
 </head>
 <body>
-<!-- header -->
-<%@ include file="/WEB-INF/jspf/header2.jspf" %>
-<img id="img1" src="images/post.png">
+<c:choose>
+    <c:when test="${sessionScope.user.login == null}">
+        <%@ include file="/WEB-INF/jspf/header1.jspf" %>
+        <p> Sorry, you can`t get there page without authorization.</p>
+    </c:when>
+    <c:when test="${sessionScope.userRole != 'CLIENT'}">
+        <%@ include file="/WEB-INF/jspf/header1.jspf" %>
+        <p> Only client can  get there page.</p>
+    </c:when>
+    <c:when test="${sessionScope.user.id_status != '2'}">
+        <%@ include file="/WEB-INF/jspf/header1.jspf" %>
+        <p>  Sorry, your personal page was blocked.</p>
+    </c:when>
+    <c:otherwise>
+            <%@ include file="/WEB-INF/jspf/header2.jspf" %>
+<img id="img1" src="/images/post.png">
 <p class="login">${sessionScope.user.login}</p>
 <div id="flex">
         <div>
@@ -44,6 +57,8 @@
             </div>
         </div>
     </div>
+        </c:otherwise>
+    </c:choose>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </body>
 </html>

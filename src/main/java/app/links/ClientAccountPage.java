@@ -1,5 +1,7 @@
 package app.links;
 
+import app.Path;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +17,7 @@ import java.io.IOException;
         //private static final long serialVersionUID = -3071536593627692473L;
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/jsp/client_account.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.PAGE_LIST_CARDS);
             requestDispatcher.forward(req, resp);
         }
     }

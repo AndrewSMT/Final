@@ -23,6 +23,7 @@ public class PaymentCommand extends  Command {
             throws AppException {
         LOG.debug("Command starts");
         String payment = request.getParameter("payment");
+        String payment2 = (String) request.getAttribute("payment");
 
         DBManager manager = DBManager.getInstance();
         HttpSession session = request.getSession();
@@ -39,6 +40,14 @@ public class PaymentCommand extends  Command {
        }else if("public".equals(payment)){
            forward = Path.PAGE_PAYMENT_PUBLIC;
        }
+
+        if("transfer".equals(payment2)){
+            forward = Path.PAGE_PAYMENT_TRANSFER;
+        }else if("internet".equals(payment2)){
+            forward = Path.PAGE_PAYMENT_INTERNET;
+        }else if("public".equals(payment2)){
+            forward = Path.PAGE_PAYMENT_PUBLIC;
+        }
 
         return forward;
     }

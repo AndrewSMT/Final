@@ -6,7 +6,20 @@
     <%@ include file="/WEB-INF/jspf/pageConfig.jspf" %>
 </head>
 <body>
-<!-- header -->
+<c:choose>
+    <c:when test="${sessionScope.user.login == null}">
+        <%@ include file="/WEB-INF/jspf/header1.jspf" %>
+        <p> Sorry, you can`t get there page without authorization.</p>
+    </c:when>
+    <c:when test="${sessionScope.userRole != 'CLIENT'}">
+        <%@ include file="/WEB-INF/jspf/header1.jspf" %>
+        <p> Only client can  get there page.</p>
+    </c:when>
+    <c:when test="${sessionScope.user.id_status != '2'}">
+        <%@ include file="/WEB-INF/jspf/header1.jspf" %>
+        <p>  Sorry, your personal page was blocked.</p>
+    </c:when>
+    <c:otherwise>
 <%@ include file="/WEB-INF/jspf/header2.jspf" %>
 <div id="flex">
     <div class="st">
@@ -34,6 +47,9 @@
     </form>
     </div>
 </div>
+        <c:choose>
+            <c:when test="${fn:length(viewCards) == 0}">No such cards</c:when>
+            <c:otherwise>
 <div >
     <table class="w3-table w3-striped"  style="width:50%" border="1">
      <tr>
@@ -74,6 +90,10 @@
         </c:forEach>
     </table>
 </div>
+            </c:otherwise>
+        </c:choose>
+    </c:otherwise>
+</c:choose>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </body>
 </html>

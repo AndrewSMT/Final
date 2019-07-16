@@ -1,6 +1,8 @@
 package app.links;
 
 
+import app.Path;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +15,7 @@ import java.io.IOException;
 public class AddCardPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/jsp/add_card.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.PAGE_ADD_CARD);
         requestDispatcher.forward(req, resp);
     }
 }

@@ -83,40 +83,44 @@ public class ViewCardCommand extends Command {
         String sort = request.getParameter("sort");
         User user = (User) session.getAttribute("user");
 
-        List<ViewCard> viewCards = manager.getUserCards(user);
-        LOG.trace("Found in DB: ViewCard --> " + viewCards);
-
-        if("sortNumbDown".equals(sort)) {
-            viewCards.sort(CompareByNumberDown);
-        }else if("sortNameDown".equals(sort)) {
-            viewCards.sort(CompareByNameDown);
-        }else if("sortBalDown".equals(sort)) {
-            viewCards.sort(CompareByBalanceDown);
-        }else if("sortNumbUp".equals(sort)) {
-            viewCards.sort(CompareByNumberUp);
-        }else if("sortNameUp".equals(sort)) {
-            viewCards.sort(CompareByNameUp);
-        }else if("sortBalUp".equals(sort)) {
-            viewCards.sort(CompareByBalanceUp);
+        if (user == null) {
+            throw new AppException("To continue, please log in or register on the site.");
         }
+            List<ViewCard> viewCards = manager.getUserCards(user);
+            LOG.trace("Found in DB: ViewCard --> " + viewCards);
 
-        String forward = Path.PAGE_ERROR_PAGE;
+            if ("sortNumbDown".equals(sort)) {
+                viewCards.sort(CompareByNumberDown);
+            } else if ("sortNameDown".equals(sort)) {
+                viewCards.sort(CompareByNameDown);
+            } else if ("sortBalDown".equals(sort)) {
+                viewCards.sort(CompareByBalanceDown);
+            } else if ("sortNumbUp".equals(sort)) {
+                viewCards.sort(CompareByNumberUp);
+            } else if ("sortNameUp".equals(sort)) {
+                viewCards.sort(CompareByNameUp);
+            } else if ("sortBalUp".equals(sort)) {
+                viewCards.sort(CompareByBalanceUp);
+            }
 
-        if (user.getId_type() == 1) {
-            forward = Path.PAGE_LIST_ADMIN_CARDS;
-        }
+            String forward = Path.PAGE_ERROR_PAGE;
 
-        if (user.getId_type() == 2) {
-            forward = Path.PAGE_LIST_CARDS;
-        }
+            if (user.getId_type() == 1) {
+                forward = Path.PAGE_LIST_ADMIN_CARDS;
+            }
 
-        // put user order beans list to request
-        request.setAttribute("viewCards", viewCards);
+            if (user.getId_type() == 2) {
+                forward = Path.PAGE_LIST_CARDS;
+            }
 
-        LOG.trace("Set the request attribute: viewCards --> " + viewCards);
+            // put user order beans list to request
+            request.setAttribute("viewCards", viewCards);
 
-        LOG.debug("Commands finished");
-        return forward;
+            LOG.trace("Set the request attribute: viewCards --> " + viewCards);
+
+            LOG.debug("Commands finished");
+            return forward;
+
     }
 }
 

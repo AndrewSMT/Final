@@ -7,10 +7,19 @@ public class ViewPayment {
 
     private int number;
 
-
     private  int value;
 
     private  String date;
+
+    private  String service;
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
 
     public int getNumber() {
         return number;

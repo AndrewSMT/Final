@@ -105,9 +105,10 @@ public final class DBManager {
             "             payment_account on payment_account.id_account = credit_card.id_account) inner join payment on payment_account.id_payment = payment.id_payment" +
             "             Where payment_account.id_payment_type = '2' and payment_account.id_payment = ?";
 
-    private static final String SQL_GET_USER_PAYMENTS_SERV = "SELECT payment.personal_account, payment.value, payment.date from (payment inner join  " +
-            "payment_account on payment_account.id_payment = payment.id_payment)  inner JOIN account on account.id_account = payment_account.id_account WHERE" +
-            " payment_account.id_payment_type = '2' and payment_account.id_payment = ? and account.id_type = 1 ";
+    private static final String SQL_GET_USER_PAYMENTS_SERV = "SELECT payment.personal_account, payment.value, payment.date, services.title from ((payment inner join  " +
+            "            payment_account on payment_account.id_payment = payment.id_payment)  inner JOIN account on account.id_account = payment_account.id_account ) " +
+            "inner join  services on services.id_account = account.id_account where" +
+            "             payment_account.id_payment_type = '2' and payment_account.id_payment = ? and account.id_type = 1";
 
     private static final String SQL_GET_USER_PAYMENTS_FROM = "SELECT credit_card.number FROM credit_card inner JOIN payment_account on payment_account.id_account = credit_card.id_account" +
             "             Where payment_account.id_payment_type = '1' and credit_card.id_user = ? and payment_account.id_payment = ?";
@@ -759,7 +760,8 @@ public final class DBManager {
         return bean;
     }
 
-    public List<ViewPayment> getUserPayment (int id_payment,List<ViewPayment> viewPayments,ViewPayment payment) throws DBException {
+    public boolean getUserPayment (int id_payment,List<ViewPayment> viewPayments,ViewPayment payment) throws DBException {
+        boolean flag;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         Connection con = null;
@@ -780,13 +782,14 @@ public final class DBManager {
                 viewPayments.add(extractListPayment2Been(rs,payment));
             }
             con.commit();
+            flag = true;
         } catch (SQLException ex) {
             rollback(con);
             throw new DBException(Messages.ERR_CANNOT_OBTAIN_USER_PAYMENT, ex);
         } finally {
             close(con, pstmt, rs);
         }
-        return viewPayments;
+        return flag;
     }
 
     public List<ListPayment> getUserIdPayment (User user) throws DBException {
@@ -824,6 +827,7 @@ public final class DBManager {
         payment.setNumber(rs.getInt(Fields.USER_BEAN_CARD_PERSONAL_ACCOUNT));
         payment.setValue(rs.getInt(Fields.USER_BEAN_PAYMENT_VALUE));
         payment.setDate(rs.getString(Fields.USER_BEAN_PAYMENT_DATE));
+        payment.setService(rs.getString(Fields.USER_BEAN_CARD_SERVICE));
         return payment;
     }
     private ViewPayment extractListPaymentBeen(ResultSet rs, ViewPayment payment)
@@ -831,6 +835,7 @@ public final class DBManager {
         payment.setNumber(rs.getInt(Fields.USER_BEAN_CARD_NUMBER));
         payment.setValue(rs.getInt(Fields.USER_BEAN_PAYMENT_VALUE));
         payment.setDate(rs.getString(Fields.USER_BEAN_PAYMENT_DATE));
+        payment.setService("transfer between cards");
         return payment;
     }
     //close section

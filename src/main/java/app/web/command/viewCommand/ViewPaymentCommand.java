@@ -3,7 +3,6 @@ package app.web.command.viewCommand;
 
 import app.Path;
 import app.been.ListPayment;
-import app.been.ViewCard;
 import app.been.ViewPayment;
 import app.entities.User;
 import app.exception.AppException;
@@ -15,67 +14,62 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 
 public class ViewPaymentCommand extends Command {
-    //    private static final long serialVersionUID = -3071536593627692473L;
     //sorting
-    private static class CompareByNumberDown implements Comparator<ViewCard> {
-        public int compare(ViewCard bean1, ViewCard bean2) {
-            if (bean1.getNumber() > bean2.getNumber()) {
+    private static class CompareByNumberDown implements Comparator<ViewPayment> {
+        public int compare(ViewPayment bean1, ViewPayment bean2) {
+            if (bean1.getNumberFrom() > bean2.getNumberFrom()) {
                 return 1;
             } else {
                 return -1;
             }
         }
     }
-    private static class CompareByNameDown implements Comparator<ViewCard> {
-        public int compare(ViewCard bean1, ViewCard bean2) {
-            return bean1.getName().compareTo(bean2.getName());
+    private static class CompareByDateDown implements Comparator<ViewPayment> {
+        DateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        @Override
+        public int compare(ViewPayment o1, ViewPayment o2) {
+            try {
+                return f.parse(o1.getDate()).compareTo(f.parse(o2.getDate()));
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
         }
     }
-    private static class CompareByBalanceDown implements Comparator<ViewCard> {
-        public int compare(ViewCard bean1, ViewCard bean2) {
-            if (bean1.getBalance() > bean2.getBalance()) {
+    private static class CompareByNumberUp implements Comparator<ViewPayment> {
+        public int compare(ViewPayment bean1, ViewPayment bean2) {
+            if (bean1.getNumberFrom() < bean2.getNumberFrom()) {
                 return 1;
             } else {
                 return -1;
             }
         }
     }
-    private static class CompareByNumberUp implements Comparator<ViewCard> {
-        public int compare(ViewCard bean1, ViewCard bean2) {
-            if (bean1.getNumber() < bean2.getNumber()) {
-                return 1;
-            } else {
-                return -1;
+    private static class CompareByDateUp implements Comparator<ViewPayment> {
+        DateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        @Override
+        public int compare(ViewPayment o1, ViewPayment o2) {
+            try {
+                return f.parse(o2.getDate()).compareTo(f.parse(o1.getDate()));
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
             }
         }
     }
-    private static class CompareByNameUp implements Comparator<ViewCard>  {
-        public int compare(ViewCard bean1, ViewCard bean2) {
-            return bean2.getName().compareTo(bean1.getName());
-        }
-    }
-    private static class CompareByBalanceUp implements Comparator<ViewCard> {
-        public int compare(ViewCard bean1, ViewCard bean2) {
-            if (bean1.getBalance() < bean2.getBalance()) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-    }
+
     private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);
-    private static Comparator<ViewCard> CompareByNumberDown = new CompareByNumberDown();
-    private static Comparator<ViewCard> CompareByNameDown = new CompareByNameDown();
-    private static Comparator<ViewCard> CompareByBalanceDown = new CompareByBalanceDown();
-    private static Comparator<ViewCard> CompareByNumberUp = new CompareByNumberUp();
-    private static Comparator<ViewCard> CompareByNameUp = new CompareByNameUp();
-    private static Comparator<ViewCard> CompareByBalanceUp = new CompareByBalanceUp();
+    private static Comparator<ViewPayment> CompareByNumberDown = new CompareByNumberDown();
+    private static Comparator<ViewPayment> CompareByDateDown = new CompareByDateDown();
+    private static Comparator<ViewPayment> CompareByNumberUp = new CompareByNumberUp();
+    private static Comparator<ViewPayment> CompareByDateUp = new CompareByDateUp();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws AppException {
@@ -87,30 +81,27 @@ public class ViewPaymentCommand extends Command {
 
         List<ListPayment> listPayment = manager.getUserIdPayment(user);
         List<ViewPayment> viewPayments = new ArrayList<>();
+        boolean flag = true;
         for (ListPayment lp: listPayment){
             ViewPayment payment = manager.getUserNumberFrom(lp.getId_payment(),user,viewPayments);
-            manager.getUserPayment(lp.getId_payment(),viewPayments,payment);
+           flag = manager.getUserPayment(lp.getId_payment(),viewPayments,payment);
         }
 
         LOG.trace("Found in DB: viewPayments --> " + viewPayments);
 
-   /*     if("sortNumbDown".equals(sort)) {
-            viewCards.sort(CompareByNumberDown);
+       if("sortNumbDown".equals(sort)) {
+           viewPayments.sort(CompareByNumberDown);
         }else if("sortNameDown".equals(sort)) {
-            viewCards.sort(CompareByNameDown);
-        }else if("sortBalDown".equals(sort)) {
-            viewCards.sort(CompareByBalanceDown);
+           viewPayments.sort(ViewPaymentCommand.CompareByDateDown);
         }else if("sortNumbUp".equals(sort)) {
-            viewCards.sort(CompareByNumberUp);
+           viewPayments.sort(CompareByNumberUp);
         }else if("sortNameUp".equals(sort)) {
-            viewCards.sort(CompareByNameUp);
-        }else if("sortBalUp".equals(sort)) {
-            viewCards.sort(CompareByBalanceUp);
-        }*/
+           viewPayments.sort(ViewPaymentCommand.CompareByDateUp);
+        }
 
         String forward = Path.PAGE_ERROR_PAGE;
 
-        if ( !viewPayments.isEmpty()) {
+        if (flag) {
             forward = Path.PAGE_LIST_PAYMENTS;
         }
 

@@ -11,13 +11,17 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class NewCardCommand extends Command {
-    //    private static final long serialVersionUID = -3071536593627692473L;
-
     private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);
-
+    private static final String NUMBER_PATTERN = "^[0-9]{9}$";
+    private static final String DATE_PATTERN = "^[0-9]{2}\\/[0-9]{2}$";
+    private static final String CVV_PATTERN = "^[0-9]{3}$";
+    private Matcher matcher;
+    private Pattern pat;
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws AppException {
@@ -32,14 +36,27 @@ public class NewCardCommand extends Command {
         if (number == null || date == null || code == null ||
                 number.isEmpty() || date.isEmpty() ||
                 code.isEmpty() ) {
-            throw new AppException("All fields must be fill");
+            request.setAttribute("valid", "All fields must be fill");
+            return Path.PAGE_ADD_CARD;
         }
         //check exist user
         User user = (User) session.getAttribute("user");
         boolean cardExist = manager.findCardByLogin(user,number);
-
         if (cardExist) {
-            throw new AppException("Card already exist in your account");
+            request.setAttribute("valid", "Card already exist in your account");
+            return Path.PAGE_ADD_CARD;
+        }
+        if(!validatePatern(number, NUMBER_PATTERN)) {
+            request.setAttribute("valid", "Field card number must contain only 9 numbers");
+            return Path.PAGE_ADD_CARD;
+        }
+        if(!validatePatern(date, DATE_PATTERN)) {
+            request.setAttribute("valid", "Enter the date  according to the pattern MM/YY");
+            return Path.PAGE_ADD_CARD;
+        }
+        if(!validatePatern(code, CVV_PATTERN)) {
+            request.setAttribute("valid", "Field СVV2 must contain only 3 numbers");
+            return Path.PAGE_ADD_CARD;
         }
         Card card = new Card();
         card.setNumber(Integer.parseInt(number));
@@ -53,9 +70,15 @@ public class NewCardCommand extends Command {
         String forward = Path.PAGE_ERROR_PAGE;
 
         if (cardd != null) {
-            forward = Path.PAGE_CLIENT_MENU;
+            forward = Path.PAGE_SUCCESSFUL_ADD_CARD;
         }
         LOG.debug("Command finished");
         return forward;
+    }
+    //valid methods
+    public boolean validatePatern(String value, String pattern) {
+        pat = Pattern.compile(pattern);
+        matcher = pat.matcher(value);
+        return matcher.matches();
     }
 }

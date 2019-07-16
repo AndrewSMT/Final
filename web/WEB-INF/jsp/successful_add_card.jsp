@@ -22,11 +22,10 @@
         <p>  Sorry, your personal page was blocked.</p>
     </c:when>
     <c:otherwise>
-<div class="w3-container w3-display-middle" >
-    <p>Payment was successful</p>
-    <button class="w3-btn w3-border  w3-cyan w3-border-gray w3-round-large w3-medium"
-            onclick="location.href='/clientpage'"><p class="index-button">Home</p></button>
-</div>
+        <div class="w3-container w3-display-middle" >
+            <h3>Card was added successful</h3>
+            <a href="http://localhost:8082/clientpage?"><img id="img1" src="/images/unnamed.png"></a>
+        </div>
     </c:otherwise>
 </c:choose>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>

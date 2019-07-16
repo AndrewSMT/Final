@@ -31,6 +31,7 @@ public final class Fields {
     public static final String USER_BEAN_CARD_ID_PAYMENT = "id_payment";
     public static final String USER_BEAN_PAYMENT_VALUE= "value";
     public static final String USER_BEAN_PAYMENT_DATE= "date";
+    public static final String USER_BEAN_CARD_SERVICE = "title";
 
     //service
     public static final String SERVICE_BEAN_TITLE = "title";
