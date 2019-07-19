@@ -10,7 +10,6 @@ import app.manager.DBManager;
 import app.web.command.Command;
 import app.web.command.logCommand.RegistrationCommand;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -65,7 +64,7 @@ public class ViewPaymentCommand extends Command {
         }
     }
 
-    private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);
+    private static final Logger LOG = Logger.getLogger(ViewPaymentCommand.class);
     private static Comparator<ViewPayment> CompareByNumberDown = new CompareByNumberDown();
     private static Comparator<ViewPayment> CompareByDateDown = new CompareByDateDown();
     private static Comparator<ViewPayment> CompareByNumberUp = new CompareByNumberUp();
@@ -78,17 +77,24 @@ public class ViewPaymentCommand extends Command {
         HttpSession session = request.getSession();
         String sort = request.getParameter("sort");
         User user = (User) session.getAttribute("user");
+        LOG.trace("Request attribute: user --> " + user);
+        LOG.trace("Request parameter: sort --> " + sort);
 
+        //init payments
         List<ListPayment> listPayment = manager.getUserIdPayment(user);
         List<ViewPayment> viewPayments = new ArrayList<>();
+        LOG.trace("Found in DB: listPayment --> " + listPayment);
+        LOG.trace("Found in DB: viewPayments --> " + viewPayments);
+
+        //fill payments list
         boolean flag = true;
         for (ListPayment lp: listPayment){
             ViewPayment payment = manager.getUserNumberFrom(lp.getId_payment(),user,viewPayments);
+            LOG.trace("Found in DB: payment --> " + payment);
            flag = manager.getUserPayment(lp.getId_payment(),viewPayments,payment);
         }
 
-        LOG.trace("Found in DB: viewPayments --> " + viewPayments);
-
+        //sorting section
        if("sortNumbDown".equals(sort)) {
            viewPayments.sort(CompareByNumberDown);
         }else if("sortNameDown".equals(sort)) {
@@ -99,17 +105,15 @@ public class ViewPaymentCommand extends Command {
            viewPayments.sort(ViewPaymentCommand.CompareByDateUp);
         }
 
+        //check on error
         String forward = Path.PAGE_ERROR_PAGE;
-
         if (flag) {
             forward = Path.PAGE_LIST_PAYMENTS;
         }
 
 
-        // put user order beans list to request
+        // put user payments  list to request
         request.setAttribute("viewPayments", viewPayments);
-
-
         LOG.trace("Set the request attribute: viewPayments --> " + viewPayments);
 
         LOG.debug("Commands finished");

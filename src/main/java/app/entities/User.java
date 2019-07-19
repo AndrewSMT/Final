@@ -1,9 +1,9 @@
 package app.entities;
 
+//user entity
 
 public class User {
 
-    private static final long serialVersionUID = -6889036256149495388L;
     private Long id_user;
 
     private String login;

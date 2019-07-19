@@ -28,13 +28,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
+//DBManager Only the required DAO methods are defined!
 public final class DBManager {
 
     private static final int RANDOM_N = 100000000;
     private static final int MAGIC_T = 888888888;
-
     private static final Logger LOG = Logger.getLogger(DBManager.class);
+
+    // singleton
     private static DBManager instance;
 
     public static synchronized DBManager getInstance() throws DBException {
@@ -57,6 +58,8 @@ public final class DBManager {
 
     private DataSource ds;
 
+    //Returns a DB connection from the Pool Connections
+
     public Connection getConnection() throws DBException {
         Connection con = null;
         try {
@@ -70,9 +73,7 @@ public final class DBManager {
     }
 
 
-    // //////////////////////////////////////////////////////////
     // SQL queries
-    // //////////////////////////////////////////////////////////
 
     private static final String SQL_FIND_USER_BY_LOGIN = "SELECT * FROM user WHERE login=?";
 
@@ -133,7 +134,8 @@ public final class DBManager {
 
     private static final String SQL_REQUEST_UNBLOCK_CARD = "UPDATE account SET request = 'Unblock this card' WHERE id_account = ?";
 
-    private static final String SQL_GET_USER_CARD = "SELECT credit_card.number, credit_card.id_account FROM credit_card WHERE credit_card.id_user = ?";
+    private static final String SQL_GET_USER_CARD = "SELECT credit_card.number, credit_card.id_account FROM credit_card  inner join account  on credit_card.id_account = account.id_account\n" +
+            "             WHERE credit_card.id_user = ? and account.id_status = '2'";
 
     private static final String SQL_GET_SERVICE = "SELECT services.title, services.id_account FROM services WHERE services.service = ?";
 
@@ -146,6 +148,9 @@ public final class DBManager {
     private static final String SQL_UPDATE_PAYMENT_STATUS = "UPDATE payment SET payment.id_status = '2' WHERE id_payment = ?";
 
     //User section
+
+    //find user with parameter login
+    //return user
     public User findUserByLogin(String login) throws DBException {
         User user = null;
         PreparedStatement pstmt = null;
@@ -171,6 +176,8 @@ public final class DBManager {
         return user;
     }
 
+    //insert new user with parameter user
+    //return user
     public User insertNewUser(User user) throws DBException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -204,9 +211,10 @@ public final class DBManager {
         return user;
     }
 
+    //fill user been
+    //return user
     private User extractUser(ResultSet rs) throws SQLException {
         User user = new User();
-
         user.setId_user(rs.getLong(Fields.USER_ID));
         user.setLogin(rs.getString(Fields.USER_LOGIN));
         user.setPassword(rs.getString(Fields.USER_PASSWORD));
@@ -218,6 +226,8 @@ public final class DBManager {
         return user;
     }
 
+    //get all user and insert into list
+    //return user list
     public List<ViewUsers> getAllUser() throws DBException {
         List<ViewUsers> viewUsers = new ArrayList<>();
         PreparedStatement pstmt = null;
@@ -241,6 +251,8 @@ public final class DBManager {
         return viewUsers;
     }
 
+    //fill view user
+    //return view user
     private ViewUsers extractUsersBean(ResultSet rs)
             throws SQLException {
         ViewUsers bean = new ViewUsers();
@@ -253,6 +265,8 @@ public final class DBManager {
         return bean;
     }
 
+    //block user by parameter id_user
+    //return success operation
     public boolean blockUser(String status, int id_user) throws DBException {
         boolean block;
         PreparedStatement pstmt = null;
@@ -282,6 +296,9 @@ public final class DBManager {
     }
 
     //Card section
+
+    //find card with parameter user, number
+    //return exist card
     public boolean findCardByLogin(User user, String number) throws DBException {
         boolean cardExist = false;
         PreparedStatement pstmt = null;
@@ -307,6 +324,8 @@ public final class DBManager {
         return cardExist;
     }
 
+    //insert new card with parameter card
+    //return card
     public Card insertNewCard(Card card) throws DBException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -370,6 +389,8 @@ public final class DBManager {
         return viewCard;
     }
 
+    //get all user cards and insert into list
+    //return card list
     public List<ViewCard> getCards(User user) throws DBException {
         List<ViewCard> viewCard = new ArrayList<>();
         PreparedStatement pstmt = null;
@@ -394,6 +415,8 @@ public final class DBManager {
         return viewCard;
     }
 
+    //get recipient card with parm number
+    //return card list
     public ViewCard getRecipientCard(int number) throws DBException {
         ViewCard viewCard = null;
         PreparedStatement pstmt = null;
@@ -418,6 +441,8 @@ public final class DBManager {
         return viewCard;
     }
 
+    //get balance on card with parm number
+    //return card balance
     public int getBalance(int number) throws DBException {
         int balance = 0;
         PreparedStatement pstmt = null;
@@ -442,6 +467,8 @@ public final class DBManager {
         return balance;
     }
 
+    //fill ViewCard
+    //return ViewCard
     private ViewCard extractUserCardsBean(ResultSet rs)
             throws SQLException {
         ViewCard bean = new ViewCard();
@@ -454,6 +481,8 @@ public final class DBManager {
         return bean;
     }
 
+    //fill for admin ViewCard
+    //return ViewCard
     private ViewCard extractAdminUsersCardsBean(ResultSet rs)
             throws SQLException {
         ViewCard bean = new ViewCard();
@@ -468,6 +497,8 @@ public final class DBManager {
         return bean;
     }
 
+    //fill ViewCard
+    //return ViewCard
     private ViewCard extractUsersCardsBean(ResultSet rs)
             throws SQLException {
         ViewCard bean = new ViewCard();
@@ -476,6 +507,8 @@ public final class DBManager {
         return bean;
     }
 
+    //fill ViewService
+    //return ViewService
     private ViewService extractServiceBean(ResultSet rs)
             throws SQLException {
         ViewService bean = new ViewService();
@@ -484,6 +517,8 @@ public final class DBManager {
         return bean;
     }
 
+    //block user card with id_account
+    //return success operation
     public boolean blockCard(int id_account, String status, int type) throws DBException {
         boolean block;
         PreparedStatement pstmt = null;
@@ -512,6 +547,8 @@ public final class DBManager {
         return block;
     }
 
+    //send unblock request by id account
+    //return success operation
     public boolean requestUnblockCard(int id_account) throws DBException {
         boolean requestSend;
         PreparedStatement pstmt = null;
@@ -535,6 +572,7 @@ public final class DBManager {
     }
 
     //service section
+
     public List<ViewService> getService(String service) throws DBException {
         List<ViewService> viewService = new ArrayList<>();
         PreparedStatement pstmt = null;
@@ -560,6 +598,9 @@ public final class DBManager {
     }
 
     //account section
+
+    //insert new account with parameter type
+    //return id account
     public int insertNewAccount(String type) throws DBException {
         int id = 0;
         PreparedStatement pstmt = null;
@@ -596,6 +637,8 @@ public final class DBManager {
 
     //payment section
 
+    //insert new payment with parameter howMuch
+    //return id payment
     public int insertPayment(int howMuch) throws DBException {
         int id = 0;
         PreparedStatement pstmt = null;
@@ -627,6 +670,8 @@ public final class DBManager {
         return id;
     }
 
+    //insert new payment service with parameter howMuch and personal_account
+    //return id payment
     public int insertPaymentService(int howMuch, int personal_account) throws DBException {
         int id = 0;
         PreparedStatement pstmt = null;
@@ -659,6 +704,8 @@ public final class DBManager {
         return id;
     }
 
+    //insert new fromTo payment with parameter who, id_account, id_payment
+    //return sucess operation
     public boolean insertFromTo(int who, int id_account, int id_payment) throws DBException {
         boolean flag;
         PreparedStatement pstmt = null;
@@ -728,6 +775,8 @@ public final class DBManager {
         return flag;
     }
 
+    //get balance on card with parm number
+    //return card balance
     public ViewPayment getUserNumberFrom (int id_payment,User user,List<ViewPayment> viewPayments) throws DBException {
         ViewPayment been = null;
         PreparedStatement pstmt = null;
@@ -760,6 +809,8 @@ public final class DBManager {
         return bean;
     }
 
+    //get user payment
+    //return sucess operation
     public boolean getUserPayment (int id_payment,List<ViewPayment> viewPayments,ViewPayment payment) throws DBException {
         boolean flag;
         PreparedStatement pstmt = null;
@@ -792,6 +843,8 @@ public final class DBManager {
         return flag;
     }
 
+    //get id_payment  with parm user
+    //return lisr payment id
     public List<ListPayment> getUserIdPayment (User user) throws DBException {
         List<ListPayment> listPayment = new ArrayList<>();
         PreparedStatement pstmt = null;

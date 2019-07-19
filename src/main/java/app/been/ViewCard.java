@@ -1,6 +1,6 @@
 package app.been;
 
-import java.util.Comparator;
+//Provide records for virtual table: credit_card
 
 public class ViewCard {
 

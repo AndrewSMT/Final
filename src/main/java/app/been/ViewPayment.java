@@ -1,7 +1,8 @@
 package app.been;
 
-public class ViewPayment {
+//Provide records for virtual table: payment
 
+public class ViewPayment {
 
     private int numberFrom;
 

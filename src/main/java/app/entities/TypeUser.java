@@ -1,5 +1,7 @@
 package app.entities;
 
+//Type user entity
+
 public enum TypeUser {
     NOROLE, ADMIN, CLIENT;
 

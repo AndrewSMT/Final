@@ -39,11 +39,10 @@
                        name="from" value="${bean.number}" required></p>
             </c:forEach>
             <p><label>To card:</label>
-                <input class="w3-input w3-border" maxlength='9' minlength="9" pattern="^[0-9]{9}$" type="text"
+                <input class="w3-input w3-border" maxlength='9' minlength="9" pattern="^[0-9]{9}$" type="number"
                        name="to" required></p>
-            <p><label>How much:</label>
-                <span class="currencyinput">$<input class="w3-input w3-border" maxlength='9' minlength="9"
-                                                    pattern="^[0-9]{9}$" type="number" name="howmuch" required></span></p>
+            <p><label>Amount:</label>$
+                <input class="w3-input w3-border" maxlength='9' minlength="9" pattern="^[0-9]{1,9}$" type="number" name="howmuch" required></p>
             <p>
                 <button class="w3-btn w3-blue " type="submit" name="submit">Next</button>
             </p>

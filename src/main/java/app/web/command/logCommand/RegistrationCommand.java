@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+//Command for registration new user
 public class RegistrationCommand extends Command {
     private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);
     private static final String PHONE_PATTERN = ".+38\\([0-9]{3}\\)[0-9]{3}-[0-9]{2}-[0-9]{2}";
@@ -27,22 +27,31 @@ public class RegistrationCommand extends Command {
             throws AppException {
         LOG.debug("Command starts");
         DBManager manager = DBManager.getInstance();
+
+        // get request parameters
         String login = request.getParameter("login");
-        LOG.trace("Request parameter: login --> " + login);
         String pass = request.getParameter("pass");
         String first_name = request.getParameter("first_name");
         String last_name = request.getParameter("last_name");
         String phone = request.getParameter("phone");
         String forward = null;
+
+        LOG.trace("Request parameter: login --> " + login);
+        LOG.trace("Request parameter: password --> " + pass);
+        LOG.trace("Request parameter: first_name --> " + first_name);
+        LOG.trace("Request parameter: last_name --> " + last_name);
+        LOG.trace("Request parameter: phone --> " + phone);
+
         //check exist user
         User userr = manager.findUserByLogin(login);
-        LOG.trace("Found in DB: user --> " + userr);
-        //validations section
-
         if (userr != null) {
             request.setAttribute("valid", "Account with this login already exists");
             return Path.PAGE_REG;
         }
+        LOG.trace("Found in DB: user --> " + userr);
+
+
+        //validation section
         if(!validatePatern(login, LOGIN_PATTERN)) {
             request.setAttribute("valid", "Login must contain only letters from 5 to 4");
             return Path.PAGE_REG;
@@ -73,16 +82,16 @@ public class RegistrationCommand extends Command {
         user.setLastName(last_name);
 
         manager.insertNewUser(user);
-
+        LOG.trace("Insert into DB: user --> " + user);
 
         if (user != null) {
             forward = Path.PAGE_MAIN;
         }
+
         LOG.debug("Command finished");
         return forward;
     }
-
-    //valid methods
+    //validation method
     public boolean validatePatern(String value, String pattern) {
         pat = Pattern.compile(pattern);
         matcher = pat.matcher(value);

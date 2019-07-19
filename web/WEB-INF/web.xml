@@ -7,4 +7,46 @@
         <resource-env-ref-name>jdbc/db</resource-env-ref-name>
         <resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
     </resource-env-ref>
+
+    <!--Controller=-->
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>app.web.Controller</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
+
+    <!--Context Listener -->
+    <listener>
+        <listener-class>app.web.listener.ContextListener</listener-class>
+    </listener>
+
+    <!--Encoding filter-->
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>app.web.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/WEB-INF/jsp/*</url-pattern>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
+
+    <!--Access filter-->
+    <filter>
+        <filter-name>AccessFilter</filter-name>
+        <filter-class>app.web.filter.AccessFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AccessFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
 </web-app>

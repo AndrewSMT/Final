@@ -3,7 +3,6 @@ package app.web.command.viewCommand;
 
 import app.Path;
 import app.been.ViewCard;
-import app.entities.TypeUser;
 import app.entities.User;
 import app.exception.AppException;
 import app.manager.DBManager;
@@ -17,10 +16,10 @@ import javax.servlet.http.HttpSession;
 import java.util.Comparator;
 import java.util.List;
 
-
+// Command  that display card for user or admin
 public class ViewCardCommand extends Command {
-    //    private static final long serialVersionUID = -3071536593627692473L;
-    //sorting
+    //sorting section
+
     private static class CompareByNumberDown implements Comparator<ViewCard> {
         public int compare(ViewCard bean1, ViewCard bean2) {
             if (bean1.getNumber() > bean2.getNumber()) {
@@ -30,11 +29,13 @@ public class ViewCardCommand extends Command {
             }
         }
     }
+
     private static class CompareByNameDown implements Comparator<ViewCard> {
         public int compare(ViewCard bean1, ViewCard bean2) {
            return bean1.getName().compareTo(bean2.getName());
         }
     }
+
     private static class CompareByBalanceDown implements Comparator<ViewCard> {
         public int compare(ViewCard bean1, ViewCard bean2) {
             if (bean1.getBalance() > bean2.getBalance()) {
@@ -44,6 +45,7 @@ public class ViewCardCommand extends Command {
             }
         }
     }
+
     private static class CompareByNumberUp implements Comparator<ViewCard> {
         public int compare(ViewCard bean1, ViewCard bean2) {
             if (bean1.getNumber() < bean2.getNumber()) {
@@ -53,11 +55,13 @@ public class ViewCardCommand extends Command {
             }
         }
     }
+
     private static class CompareByNameUp implements Comparator<ViewCard>  {
         public int compare(ViewCard bean1, ViewCard bean2) {
             return bean2.getName().compareTo(bean1.getName());
         }
     }
+
     private static class CompareByBalanceUp implements Comparator<ViewCard> {
         public int compare(ViewCard bean1, ViewCard bean2) {
             if (bean1.getBalance() < bean2.getBalance()) {
@@ -67,7 +71,9 @@ public class ViewCardCommand extends Command {
             }
         }
     }
-    private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);
+
+    private static final Logger LOG = Logger.getLogger(ViewCardCommand.class);
+
     private static Comparator<ViewCard> CompareByNumberDown = new CompareByNumberDown();
     private static Comparator<ViewCard> CompareByNameDown = new CompareByNameDown();
     private static Comparator<ViewCard> CompareByBalanceDown = new CompareByBalanceDown();
@@ -82,6 +88,9 @@ public class ViewCardCommand extends Command {
         HttpSession session = request.getSession();
         String sort = request.getParameter("sort");
         User user = (User) session.getAttribute("user");
+        LOG.trace("Request attribute: user --> " + user);
+        LOG.trace("Request parameter: sort --> " + sort);
+
 
         if (user == null) {
             throw new AppException("To continue, please log in or register on the site.");
@@ -103,21 +112,18 @@ public class ViewCardCommand extends Command {
                 viewCards.sort(CompareByBalanceUp);
             }
 
+            //check on error and next page
             String forward = Path.PAGE_ERROR_PAGE;
-
             if (user.getId_type() == 1) {
                 forward = Path.PAGE_LIST_ADMIN_CARDS;
             }
-
             if (user.getId_type() == 2) {
                 forward = Path.PAGE_LIST_CARDS;
             }
 
-            // put user order beans list to request
+            // put user cards beans list to request
             request.setAttribute("viewCards", viewCards);
-
             LOG.trace("Set the request attribute: viewCards --> " + viewCards);
-
             LOG.debug("Commands finished");
             return forward;
 

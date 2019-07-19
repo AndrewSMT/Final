@@ -1,5 +1,7 @@
 package app.links;
 
+//Link on page: user card
+
 import app.Path;
 
 import javax.servlet.RequestDispatcher;
@@ -10,11 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
     @WebServlet("/clientaccount/*")
     public class ClientAccountPage extends HttpServlet{
 
-        //private static final long serialVersionUID = -3071536593627692473L;
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher(Path.PAGE_LIST_CARDS);

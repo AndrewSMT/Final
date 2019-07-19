@@ -36,20 +36,22 @@
             ${bean.number}
     </label>
         <input  type="hidden" name="id_account_card" value="${bean.id_account}">
-        <input type="radio" name="from" value="${bean.number}"></p>
+        <input type="radio" name="from" required value="${bean.number}"></p>
     </c:forEach>
 
-    <p><label >Select service</label>
-     <label><c:forEach var="bean" items="${viewService}">
+    <p><label >Select service</label></p>
+    <p> <label><c:forEach var="bean" items="${viewService}">
             ${bean.title}
     </label>
         <input type="hidden" name="title" value="${bean.title}">
-    <input type="radio" name="id_account_service" value="${bean.id_account}"></p>
+    <input type="radio" name="id_account_service" required value="${bean.id_account}"></p>
     </c:forEach>
     <p><label >Personal account:</label>
-        <input class="w3-input w3-border" type="number" name="personal_account" ></p>
-    <p><label >How much:</label>
-        <input class="w3-input w3-border"  name="howmuch" ></p>
+        <input class="w3-input w3-border" type="number" type="text"  pattern="^[0-9]{1,9}$"
+               name="personal_account"required ></p>
+    <p><label >Amount:</label>$
+        <input class="w3-input w3-border" type="text"  pattern="^[0-9]{1,9}$"
+               name="howmuch" required></p>
     <p><button  class="w3-btn w3-blue " type="submit" name="submit">Next</button></p>
 </form>
     </c:otherwise>
@@ -57,4 +59,3 @@
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </body>
 </html>
-type="text" maxlength='9' minlength="9" pattern="^[0-9]{9}$"

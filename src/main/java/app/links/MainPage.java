@@ -1,5 +1,7 @@
 package app.links;
 
+//Link on page: main page
+
 import app.Path;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +14,6 @@ import java.io.IOException;
 
 @WebServlet("/main/*")
 public class MainPage extends HttpServlet {
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -1,5 +1,8 @@
 package app.been;
 
+
+//Provide records for virtual table: service
+
 public class ViewService {
 
     private String title;

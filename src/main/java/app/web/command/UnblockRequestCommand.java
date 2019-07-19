@@ -10,24 +10,30 @@ import app.web.command.Command;
 import app.web.command.logCommand.LoginCommand;
 import org.apache.log4j.Logger;
 
+//Command on send unblock request
+public class UnblockRequestCommand extends Command {
 
-public class UnblockRequsetCommand extends Command {
-
-
-    private static final Logger LOG = Logger.getLogger(LoginCommand.class);
+    private static final Logger LOG = Logger.getLogger(UnblockRequestCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws AppException {
         LOG.debug("Command starts");
-        int id_account = Integer.parseInt(request.getParameter("id_account"));
-        // obtain login and password from a request
         DBManager manager = DBManager.getInstance();
+        int id_account = Integer.parseInt(request.getParameter("id_account"));
+
+        LOG.trace("Request parameter: id_account --> " + id_account);
+
+        //do unblock
         boolean req = manager.requestUnblockCard(id_account);
+
+        //check error
         String forward = Path.PAGE_ERROR_PAGE;
         if (req) {
             forward = Path.COMMAND_LIST_CARDS;
         }
+        LOG.debug("Command finish");
+
         return forward;
     }
 }

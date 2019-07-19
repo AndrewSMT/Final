@@ -1,5 +1,7 @@
 package app.links;
 
+//Link on page: registration
+
 import app.Path;
 
 import javax.servlet.RequestDispatcher;
@@ -9,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 @WebServlet("/registration/*")
 public class RegPage extends HttpServlet {
 

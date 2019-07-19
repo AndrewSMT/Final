@@ -1,17 +1,16 @@
-package app.web.command.page;
+package app.web.command;
 
 import app.Path;
-import app.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MainPage extends Command {
-    //  private static final long serialVersionUID = 7732286214029478505L;
+public class AdminMenuCommand extends Command {
     @Override
     public String execute(HttpServletRequest request,
                           HttpServletResponse response)  {
-        return Path.PAGE_MAIN;
+        return Path.PAGE_ADMIN_MENU;
     }
 
 }
+

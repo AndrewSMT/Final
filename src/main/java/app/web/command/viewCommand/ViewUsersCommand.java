@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ViewUsersCommand extends Command {
 
-    private static final Logger LOG = Logger.getLogger(RegistrationCommand.class);
+    private static final Logger LOG = Logger.getLogger(ViewUsersCommand.class);
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws AppException {
@@ -27,9 +27,10 @@ public class ViewUsersCommand extends Command {
         DBManager manager = DBManager.getInstance();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        LOG.trace("Request attribute: user --> " + user);
 
         List<ViewUsers> viewUsers = manager.getAllUser();
-        LOG.trace("Found in DB: ViewCard --> " + viewUsers);
+        LOG.trace("Found in DB: viewUsers --> " + viewUsers);
 
         String forward = Path.PAGE_ERROR_PAGE;
 
@@ -38,7 +39,11 @@ public class ViewUsersCommand extends Command {
         }if (user.getId_type() == 2){
             throw new AppException("Sorry you have no right to get on this page");
         }
+
         request.setAttribute("viewUsers", viewUsers);
+        LOG.trace("Set the request attribute: viewUsers --> " + viewUsers);
+
+        LOG.debug("Commands finished");
         return forward;
     }
 

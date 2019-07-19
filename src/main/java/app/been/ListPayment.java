@@ -1,5 +1,7 @@
 package app.been;
 
+//Provide records for list id_payment
+
 public class ListPayment {
 
     private int id_payment;

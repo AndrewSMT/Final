@@ -1,5 +1,7 @@
 package app.entities;
 
+//Card entity
+
 public class Card {
 
     private Long id_card;

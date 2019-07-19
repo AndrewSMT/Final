@@ -13,7 +13,7 @@
 </c:when>
 <c:when test="${sessionScope.userRole != 'ADMIN'}">
     <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-    <p> Only client can  get there page.</p>
+    <p> Only admin can  get there page.</p>
 </c:when>
 <c:when test="${sessionScope.user.id_status != '2'}">
     <%@ include file="/WEB-INF/jspf/header1.jspf" %>

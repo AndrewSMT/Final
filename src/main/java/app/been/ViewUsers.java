@@ -1,5 +1,7 @@
 package app.been;
 
+//Provide records for virtual table: user
+
 public class ViewUsers {
 
 

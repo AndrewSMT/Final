@@ -12,30 +12,31 @@ import app.manager.DBManager;
 import app.web.command.logCommand.LoginCommand;
 import org.apache.log4j.Logger;
 
-
-//Login command
+//Command for blocking user by  admin
 public class BlockUserCommand extends Command {
 
-    //private static final long serialVersionUID = -3071536593627692473L;
-
-    private static final Logger LOG = Logger.getLogger(LoginCommand.class);
+    private static final Logger LOG = Logger.getLogger(BlockUserCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws AppException {
+        DBManager manager = DBManager.getInstance();
+
         LOG.debug("Command starts");
         String status = request.getParameter("status");
         int id_user = Integer.parseInt(request.getParameter("id_user"));
-        // obtain login and password from a request
-        DBManager manager = DBManager.getInstance();
-        HttpSession session = request.getSession();
+        LOG.trace("Request parameter: id_user --> " + id_user);
+        LOG.trace("Request parameter: status --> " + status);
+
+        //blocking
         boolean block = manager.blockUser(status,id_user);
 
+        //check on error
         String forward = Path.PAGE_ERROR_PAGE;
-
         if (block) {
             forward = Path.COMMAND_LIST_USER;
         }
+
         return forward;
     }
 }

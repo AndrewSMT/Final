@@ -1,6 +1,7 @@
 body {
+
     font-family: "Arial";
-    background: url(/images/fon-dlya-sayta.jpg); /* Цвет фона и путь к файлу */
+    background: url(/images/fon-dlya-sayta.jpg);
 }
 #footer {
     font-family: Arial;
@@ -13,6 +14,7 @@ body {
       background: #e2e3ff;
       border-radius: 5px;
       text-align: center;
+      margin-top: 2%;
   }
 #reg_form .reg_block{
     font-family: "Arial";

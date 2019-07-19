@@ -11,7 +11,6 @@ public final class Fields {
     public static final String TYPE_USER_ID = "id_type";
     public static final String STATUS_USER_ID = "id_status";
     public static final String USER_PHONE = "phone";
-
     public static final String STATUS_USER = "title";
 
 
