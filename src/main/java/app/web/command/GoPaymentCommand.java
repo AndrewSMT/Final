@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GoPaymentCommand extends Command {
     private static final Logger LOG = Logger.getLogger(GoPaymentCommand.class);
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws AppException {
@@ -41,11 +42,11 @@ public class GoPaymentCommand extends Command {
         int id_accountFrom = fromCard.getId_account();
         LOG.trace("Found in DB: id_accountFrom --> " + id_accountFrom);
 
-        if (id_account_service !=  0){
-             id_accountTo = id_account_service;
-        }else {
-             id_accountTo = toCard.getId_account();
-             LOG.trace("Found in DB: id_accountTo --> " + id_accountTo);
+        if (id_account_service != 0) {
+            id_accountTo = id_account_service;
+        } else {
+            id_accountTo = toCard.getId_account();
+            LOG.trace("Found in DB: id_accountTo --> " + id_accountTo);
         }
 
         //balance management and check on error
@@ -54,15 +55,18 @@ public class GoPaymentCommand extends Command {
         LOG.trace("Found in DB: balanceFrom --> " + balanceFrom);
         LOG.trace("Found in DB: balanceTo --> " + balanceTo);
 
-        balanceFrom-=howmuch;
-        balanceTo+=howmuch;
+        if (balanceFrom < howmuch) {
+            throw new AppException("You don't have the right amount of money");
+        }
+        balanceFrom -= howmuch;
+        balanceTo += howmuch;
 
         boolean flag;
-        flag = manager.performPayment(id_accountFrom,balanceFrom);
+        flag = manager.performPayment(id_accountFrom, balanceFrom);
         if (!flag) {
             return Path.PAGE_ERROR_PAGE;
         }
-        flag = manager.performPayment(id_accountTo,balanceTo);
+        flag = manager.performPayment(id_accountTo, balanceTo);
         if (!flag) {
             return Path.PAGE_ERROR_PAGE;
         }
@@ -71,7 +75,7 @@ public class GoPaymentCommand extends Command {
             return Path.PAGE_ERROR_PAGE;
         }
         LOG.debug("Command finish");
-        return  Path.PAGE_SUCCESSFUL_PAYMENT;
+        return Path.PAGE_SUCCESSFUL_PAYMENT;
     }
 }
 

@@ -72,7 +72,7 @@ body {
 
 .block-1 {
     display: flex;
-    width: 1500px;
+    width: 200%;
     margin: 10px;
 }
 
@@ -113,7 +113,9 @@ body {
 .login {
     margin-left: 60px;
 }
-
+#home-button{
+    margin-left: 22%;
+}
 .clientop {
     width: 700%;
     margin-left: 25px;
@@ -133,3 +135,4 @@ body {
 .currencyinput input {
     border: 0;
 }
+

@@ -9,15 +9,18 @@
 <c:choose>
     <c:when test="${sessionScope.user.login == null}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p> Sorry, you can`t get there page without authorization.</p>
+        <p> <fmt:message key="pageSec.text1" var="textValue" />
+                ${textValue}</p>
     </c:when>
     <c:when test="${sessionScope.userRole != 'CLIENT'}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p> Only client can  get there page.</p>
+        <p><fmt:message key="pageSec.text4" var="textValue" />
+                ${textValue}</p>
     </c:when>
     <c:when test="${sessionScope.user.id_status != '2'}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p>  Sorry, your personal page was blocked.</p>
+        <p> <fmt:message key="pageSec.text2" var="textValue" />
+                ${textValue}</p>
     </c:when>
     <c:otherwise>
 <%@ include file="/WEB-INF/jspf/header2.jspf" %>
@@ -25,7 +28,7 @@
     <div class="st">
         <form  action="controller" method="post">
             <input type="hidden" name="command" value="ViewPayment"/>
-            <label>Sort by number</label>
+            <label><fmt:message key="clientPayment.sort1" var="sortValue" />${sortValue}</label>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortNumbUp">↑</button>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortNumbDown">↓</button>
         </form>
@@ -33,23 +36,30 @@
     <div class="st">
         <form  action="controller" method="post">
             <input type="hidden" name="command" value="ViewPayment"/>
-            <label>Sort by date</label>
+            <label><fmt:message key="clientPayment.sort2" var="sortValue" />${sortValue}</label>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortNameUp">↑</button>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortNameDown">↓</button>
         </form>
     </div>
 </div>
         <c:choose>
-            <c:when test="${fn:length(viewPayments) == 0}">No such payment</c:when>
+
+            <c:when test="${fn:length(viewPayments) == 0}">
+                <fmt:message key="clientPayment.errorPayment" var="errorValue" />${errorValue}</c:when>
             <c:otherwise>
 <div>
     <table class="w3-table w3-striped "  style="width:50%" border="1">
         <tr>
-            <th>From card</th>
-            <th>To card/service account</th>
-            <th>Value</th>
-            <th>Date</th>
-            <th>Service title</th>
+            <fmt:message key="clientPayment.tableHead1" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="clientPayment.tableHead2" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="clientPayment.tableHead3" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="clientPayment.tableHead4" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="clientPayment.tableHead5" var="thValue" />
+            <th>${thValue}</th>
         </tr>
         <c:forEach var="bean" items="${viewPayments}"  >
             <tr>

@@ -11,20 +11,23 @@
 <c:choose>
     <c:when test="${sessionScope.user.login == null}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p> Sorry, you can`t get there page without authorization.</p>
+        <p><fmt:message key="pageSec.text1" var="textValue" />
+                ${textValue}</p>
     </c:when>
     <c:when test="${sessionScope.userRole != 'CLIENT'}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p> Only client can  get there page.</p>
+        <p><fmt:message key="pageSec.text4" var="textValue" />
+                ${textValue}</p>
     </c:when>
     <c:when test="${sessionScope.user.id_status != '2'}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p>  Sorry, your personal page was blocked.</p>
+        <p><fmt:message key="pageSec.text2" var="textValue" />
+                ${textValue}</p>
     </c:when>
     <c:otherwise>
         <div class="w3-container w3-display-middle" >
-            <h3>Card was added successful</h3>
-            <a href="http://localhost:8082/clientpage?"><img id="img1" src="/images/unnamed.png"></a>
+            <h3><fmt:message key="successPage.text1" var="textValue"/>${textValue}</h3>
+            <a id = "home-button"  href="http://localhost:8082/clientpage?"><img id="img1" src="/images/unnamed.png"></a>
         </div>
     </c:otherwise>
 </c:choose>

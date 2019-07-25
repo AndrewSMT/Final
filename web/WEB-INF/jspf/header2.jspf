@@ -5,10 +5,12 @@
     <div class="header2">
         <form id="headF" action="controller" method="post">
             <input type="hidden" name="command" value="Logout"/>
-            <button class="w3-border-blue w3-teal w3-round-large" type="submit">Logout</button>
+            <button <fmt:message key="header2.button1" var="buttonValue" />
+                    class="w3-border-blue w3-teal w3-round-large" type="submit">${buttonValue}</button>
         </form>
         <form  action="clientpage" method="get">
-            <button class="w3-border-blue w3-teal w3-round-large"  type="submit">Personal area</button>
+            <button <fmt:message key="header2.button2" var="buttonValue" />
+                    class="w3-border-blue w3-teal w3-round-large"  type="submit">${buttonValue}</button>
         </form>
     </div>
 </div>

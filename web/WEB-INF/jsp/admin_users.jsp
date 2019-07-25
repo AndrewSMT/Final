@@ -9,26 +9,35 @@
 <c:choose>
 <c:when test="${sessionScope.user.login == null}">
     <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-    <p> Sorry, you can`t get there page without authorization.</p>
+    <p> <fmt:message key="pageSec.text1" var="textValue" />
+            ${textValue}</p>
 </c:when>
 <c:when test="${sessionScope.userRole != 'ADMIN'}">
     <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-    <p> Only admin can  get there page.</p>
+    <p><fmt:message key="pageSec.text3" var="textValue" />
+            ${textValue}</p>
 </c:when>
 <c:when test="${sessionScope.user.id_status != '2'}">
     <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-    <p>  Sorry, your personal page was blocked.</p>
+    <p><fmt:message key="pageSec.text2" var="textValue" />
+            ${textValue}</p>
 </c:when>
 <c:otherwise>
 <%@ include file="/WEB-INF/jspf/header2.jspf" %>
     <table class="w3-table w3-striped"  style="width:50%" border="1">
         <tr>
-            <th>login</th>
-            <th>phone</th>
-            <th>first_name</th>
-            <th>last_name</th>
-            <th>Status</th>
-            <th>User management</th>
+            <fmt:message key="adminUsers.tableHead1" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminUsers.tableHead2" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminUsers.tableHead3" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminUsers.tableHead4" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminUsers.tableHead5" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminUsers.tableHead6" var="thValue" />
+            <th>${thValue}</th>
         </tr>
         <c:forEach var="bean" items="${viewUsers}">
             <tr>
@@ -43,7 +52,8 @@
                             <input type="hidden" name="command" value="BlockUser"/>
                             <input type="hidden" name="status" value="${bean.status}"/>
                             <input type="hidden" name="id_user" value="${bean.id_user}"/>
-                            <button class="w3-btn w3-blue "  type="submit" >Block user</button>
+                            <button <fmt:message key="adminUsers.button1" var="buttonValue" />
+                                    class="w3-btn w3-blue "  type="submit" >${buttonValue}</button>
                         </p>
                     </form>
                 </c:if>
@@ -53,7 +63,8 @@
                                 <input type="hidden" name="command" value="BlockUser"/>
                                 <input type="hidden" name="status" value="${bean.status}"/>
                                 <input type="hidden" name="id_user" value="${bean.id_user}"/>
-                                <button class="w3-btn w3-blue "  type="submit" >Unblock</button>
+                                <button <fmt:message key="adminUsers.button2" var="buttonValue" />
+                                        class="w3-btn w3-blue "  type="submit" >${buttonValue}</button>
                             </p>
                         </form></c:if>
                 </td>

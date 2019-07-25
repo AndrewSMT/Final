@@ -9,15 +9,18 @@
 <c:choose>
 <c:when test="${sessionScope.user.login == null}">
     <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-    <p> Sorry, you can`t get there page without authorization.</p>
+    <p> <fmt:message key="pageSec.text1" var="textValue" />
+            ${textValue}</p>
 </c:when>
 <c:when test="${sessionScope.userRole != 'ADMIN'}">
     <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-    <p> Only admin can  get there page.</p>
+    <p><fmt:message key="pageSec.text3" var="textValue" />
+            ${textValue}</p>
 </c:when>
 <c:when test="${sessionScope.user.id_status != '2'}">
     <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-    <p>  Sorry, your personal page was blocked.</p>
+    <p> <fmt:message key="pageSec.text2" var="textValue" />
+            ${textValue}</p>
 </c:when>
 <c:otherwise>
 <%@ include file="/WEB-INF/jspf/header2.jspf" %>
@@ -25,7 +28,7 @@
     <div class="st">
         <form  action="controller" method="post">
             <input type="hidden" name="command" value="ViewCard"/>
-            <label>Sort by number</label>
+            <label><fmt:message key="clientAccount.sort1" var="sortValue" />${sortValue}</label>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortNumbUp">↑</button>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortNumbDown">↓</button>
         </form>
@@ -33,7 +36,7 @@
     <div class="st">
         <form  action="controller" method="post">
             <input type="hidden" name="command" value="ViewCard"/>
-            <label>Sort by name</label>
+            <label><fmt:message key="clientAccount.sort2" var="sortValue" />${sortValue}</label>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortNamebUp">↑</button>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortNameDown">↓</button>
         </form>
@@ -41,7 +44,7 @@
     <div class="st">
         <form  action="controller" method="post">
             <input type="hidden" name="command" value="ViewCard"/>
-            <label>Sort by balance</label>
+            <label><fmt:message key="clientAccount.sort3" var="sortValue" />${sortValue}</label>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortBalUp">↑</button>
             <button class="w3-button w3-black  w3-tiny" type="submit" name="sort" value="sortBalDown">↓</button>
         </form>
@@ -50,14 +53,22 @@
 <div >
     <table class="w3-table w3-striped"  style="width:50%" border="1">
         <tr>
-            <th>login</th>
-            <th>Number</th>
-            <th>Balance</th>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Сard management</th>
-            <th>Request</th>
+            <fmt:message key="adminAccount.tableHead1" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminAccount.tableHead2" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminAccount.tableHead3" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminAccount.tableHead4" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminAccount.tableHead5" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminAccount.tableHead6" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminAccount.tableHead7" var="thValue" />
+            <th>${thValue}</th>
+            <fmt:message key="adminAccount.tableHead8" var="thValue" />
+            <th>${thValue}</th>
         </tr>
         <c:forEach var="bean" items="${viewCards}">
             <tr>

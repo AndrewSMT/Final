@@ -11,22 +11,24 @@
 <c:choose>
     <c:when test="${sessionScope.user.login == null}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p> Sorry, you can`t get there page without authorization.</p>
+        <p><fmt:message key="pageSec.text1" var="textValue"/>
+                ${textValue}</p>
     </c:when>
     <c:when test="${sessionScope.userRole != 'CLIENT'}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p> Only client can  get there page.</p>
+        <p><fmt:message key="pageSec.text4" var="textValue"/>
+                ${textValue}</p>
     </c:when>
     <c:when test="${sessionScope.user.id_status != '2'}">
         <%@ include file="/WEB-INF/jspf/header1.jspf" %>
-        <p>  Sorry, your personal page was blocked.</p>
+        <p><fmt:message key="pageSec.text2" var="textValue"/>
+                ${textValue}</p>
     </c:when>
     <c:otherwise>
-<div class="w3-container w3-display-middle" >
-    <p>Payment was successful</p>
-    <button class="w3-btn w3-border  w3-cyan w3-border-gray w3-round-large w3-medium"
-            onclick="location.href='/clientpage'"><p class="index-button">Home</p></button>
-</div>
+        <div class="w3-container w3-display-middle">
+            <h3><p><fmt:message key="successPage.text2" var="textValue"/>${textValue}</p></h3>
+            <a id = "home-button"  href="http://localhost:8082/clientpage?"><img id="img1" src="/images/unnamed.png"></a>
+        </div>
     </c:otherwise>
 </c:choose>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>

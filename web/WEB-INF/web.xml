@@ -8,6 +8,11 @@
         <resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
     </resource-env-ref>
 
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>messages</param-value>
+    </context-param>
+
     <!--Controller=-->
     <servlet>
         <servlet-name>Controller</servlet-name>
@@ -26,27 +31,28 @@
 
     <!--Encoding filter-->
     <filter>
-        <filter-name>EncodingFilter</filter-name>
-        <filter-class>app.web.filter.EncodingFilter</filter-class>
+        <filter-name>CommandAccessFilter</filter-name>
+        <filter-class>app.web.filter.AccessFilter</filter-class>
         <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
+            <param-name>admin</param-name>
+            <param-value>adminMenu ViewUsers BlockUser UnBlockCard</param-value>
+        </init-param>
+        <init-param>
+            <param-name>client</param-name>
+            <param-value>clientMenu NewCard Payment Verification VerificationInternet ViewResult</param-value>
+        </init-param>
+        <init-param>
+            <param-name>common</param-name>
+            <param-value>Logout noCommand </param-value>
+        </init-param>
+        <init-param>
+            <param-name>out-of-control</param-name>
+            <param-value>login Registration ViewCard ViewPayment BlockCard</param-value>
         </init-param>
     </filter>
-    <filter-mapping>
-        <filter-name>EncodingFilter</filter-name>
-        <url-pattern>/WEB-INF/jsp/*</url-pattern>
-        <servlet-name>Controller</servlet-name>
-    </filter-mapping>
-
-    <!--Access filter-->
-    <filter>
-        <filter-name>AccessFilter</filter-name>
-        <filter-class>app.web.filter.AccessFilter</filter-class>
-    </filter>
 
     <filter-mapping>
-        <filter-name>AccessFilter</filter-name>
+        <filter-name>CommandAccessFilter</filter-name>
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 </web-app>

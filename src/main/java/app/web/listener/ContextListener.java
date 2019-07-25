@@ -7,6 +7,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+
 public class ContextListener implements ServletContextListener {
 
     private static final Logger LOG = Logger.getLogger(ContextListener.class);
@@ -45,6 +46,7 @@ public class ContextListener implements ServletContextListener {
    // Initializes CommandContainer.
 
     private void initCommandContainer() {
+
 
         // initialize commands container
         // just load class to JVM
